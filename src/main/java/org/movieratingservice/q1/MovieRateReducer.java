@@ -1,4 +1,4 @@
-package org.movieratingservice;
+package org.movieratingservice.q1;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;

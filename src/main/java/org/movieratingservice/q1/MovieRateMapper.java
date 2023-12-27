@@ -1,4 +1,4 @@
-package org.movieratingservice;
+package org.movieratingservice.q1;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.io.IntWritable;
