@@ -1,4 +1,4 @@
-package org.movieratingservice.q2;
+package org.basketball_analysi_sservice.q2;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;

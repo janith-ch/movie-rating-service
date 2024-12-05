@@ -1,14 +1,12 @@
-package org.movieratingservice.q2;
+package org.basketball_analysi_sservice.q1;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-@Slf4j
-public class PlayerScoreMapper extends Mapper<Object, Text, Text, IntWritable> {
+public class ScoringQuarterMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -18,10 +16,11 @@ public class PlayerScoreMapper extends Mapper<Object, Text, Text, IntWritable> {
         if (columns[0].equals("EVENTID")) return;
 
         try {
-            String playerName = columns[7].trim(); // PLAYER1_NAME
+            String period = columns[5].trim();
+            String team = columns[8].trim(); // PLAYER1_TEAM_ABBREVIATION
             String score = columns[23].trim(); // SCORE
 
-            if (!playerName.isEmpty() && !score.isEmpty()) {
+            if (!team.isEmpty() && !score.isEmpty() && !period.isEmpty()) {
                 String[] scoreParts = score.split(" - ");
                 int points = 0;
 
@@ -32,11 +31,11 @@ public class PlayerScoreMapper extends Mapper<Object, Text, Text, IntWritable> {
                     points = Math.abs(homeScore - awayScore);
                 }
 
-                // Emit player's name as key and points as value
-                context.write(new Text(playerName), new IntWritable(points));
+                // Emit key as "Team_Quarter" and points as value
+                context.write(new Text(team + "_" + period), new IntWritable(points));
             }
         } catch (Exception e) {
-            log.error("Error processing row: " + value);
+            System.err.println("Error processing row: " + value);
         }
     }
 }
