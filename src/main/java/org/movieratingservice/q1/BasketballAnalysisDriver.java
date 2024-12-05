@@ -1,6 +1,5 @@
-package org.movieratingservice.q2;
+package org.movieratingservice.q1;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -9,21 +8,14 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-@Slf4j
-public class MovieYearMaster {
-
+public class BasketballAnalysisDriver {
     public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            log.error("Usage: MovieYearMaster <inputPath> <outputPath>");
-            System.exit(-1);
-        }
-
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "Movie Year Count");
+        Job job = Job.getInstance(conf, "Basketball Scoring Quarter Analysis");
 
-        job.setJarByClass(MovieYearMaster.class);
-        job.setMapperClass(MovieYearMapper.class);
-        job.setReducerClass(MovieYearReducer.class);
+        job.setJarByClass(BasketballAnalysisDriver.class);
+        job.setMapperClass(ScoringQuarterMapper.class);
+        job.setReducerClass(ScoringQuarterReducer.class);
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);

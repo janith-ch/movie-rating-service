@@ -6,17 +6,16 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class MovieRateReducer extends  Reducer<Text, IntWritable, Text, IntWritable> {
-    
+public class ScoringQuarterReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+
     @Override
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        int totalCount = 0;
+        int totalPoints = 0;
 
         for (IntWritable value : values) {
-            totalCount += value.get();
+            totalPoints += value.get();
         }
 
-        context.write(key, new IntWritable(totalCount));
+        context.write(key, new IntWritable(totalPoints));
     }
-
 }
